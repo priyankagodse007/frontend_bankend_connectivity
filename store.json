@@ -1,0 +1,27 @@
+{
+    "products": [
+      {
+        "empId": "1",
+        "employeeName": "zoya",
+        "username":"abc",
+        "password":"1234",
+        "addr":{
+          "picode":54321,
+          "area":"Kothrud"
+        }
+      },
+      {
+        
+        "empId": "2",
+        "employeeName": "priya",
+        "username":"xyz",
+        "password":"2345",
+        "addr":{
+          "picode":1234,
+          "area":"pune"
+      }
+    }
+     
+    ]
+
+  }
