@@ -18,7 +18,24 @@ function onGetData(){
         }
     }
 )
+
 }
+function deleteData(applicant_Id){
+ 
+    axios.delete(`http://localhost:9091/enquiry/del/${applicant_Id}`).then(
+        function(response){
+        //setEmployees(response.data)
+        console.log(response.data)
+    }
+    ).catch(
+    function(error)
+    {
+        if(error.response.status===500){
+            alert("somthing went wrong")
+        }
+    }
+    )
+    }
 return(<div style={{border:"2px"}}>
     <h1 className='text-center'>Enquiry</h1>
     <table border={1} align='center'>
@@ -63,14 +80,20 @@ return(<div style={{border:"2px"}}>
                             <td>{enquiry.cibilScore.cibilScoreDateandTime}</td>
                             <td>{enquiry.cibilScore.status}</td>
                             <td>{enquiry.cibilScore.remark}</td>
+                            <td>
+                                <button input type="button" onClick={()=>deleteData(enquiry.applicant_Id)}>delete</button>
+                            </td>
+                           
 
-                            <></>
+                            
 
                         </tr>
+                        
                     }
                 )
             }
         </tbody>
+        
         
         </table>
 
