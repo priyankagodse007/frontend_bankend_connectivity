@@ -1,7 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-function Enquiry(){
+import { Link } from "react-router-dom";
+
+function ViewEnquiry(){
 const[employees,setEmployees]=useState([])
 function onGetData(){
     
@@ -9,8 +11,10 @@ function onGetData(){
         function(response){
         setEmployees(response.data)
         console.log(response.data)
-    }
-).catch(
+       
+    })
+    
+.catch(
     function(error)
     {
         if(error.response.status===500){
@@ -19,26 +23,33 @@ function onGetData(){
     }
 )
 
+
 }
+
+useEffect(()=>onGetData(),[])
+
 function deleteData(applicant_Id){
  
-    axios.delete(`http://localhost:9091/enquiry/del/${applicant_Id}`).then(
-        function(response){
-        //setEmployees(response.data)
-        console.log(response.data)
-    }
-    ).catch(
-    function(error)
-    {
-        if(error.response.status===500){
-            alert("somthing went wrong")
+    axios.delete(`http://localhost:9091/enquiry/del/${applicant_Id}`)
+    .then(res=>{
+        // if(res.status===200){
+            alert("product details removed")
+            window.location.reload();
         }
-    }
-    )
-    }
+       
+ ) 
+   
+    
+
+.catch(error=>console.log(error))
+    // }
+    // function addData(){
+    //     axios.post(``)
+    // }
+}
 return(<div style={{border:"2px"}}>
-    <h1 className='text-center'>Enquiry</h1>
-    <table border={1} align='center'>
+    <h1 className='text-center'>View_Enquiry</h1>
+    <table className="table table-hover table-info">
         <thead>
             <th>ApplicantId</th>
             <th>FirstName</th>
@@ -51,11 +62,9 @@ return(<div style={{border:"2px"}}>
             <th>AdharNo</th>
             <th>Address</th>
             <th>City</th>
-            <th>cibilId</th>
-            <th>CibilScore</th>
-            <th>CibilScoreDtatandTime</th>
-            <th>Status</th>
-            <th>remark</th>
+            
+            <th>Action</th>
+            <th>Edit</th>
             </thead>
             <tbody>
             {
@@ -75,13 +84,11 @@ return(<div style={{border:"2px"}}>
                             <td>{enquiry.adharNo}</td>
                             <td>{enquiry.address}</td>
                             <td>{enquiry.city}</td>
-                            <td>{enquiry.cibilScore.cibilId}</td>
-                            <td>{enquiry.cibilScore.cibilScore}</td>
-                            <td>{enquiry.cibilScore.cibilScoreDateandTime}</td>
-                            <td>{enquiry.cibilScore.status}</td>
-                            <td>{enquiry.cibilScore.remark}</td>
+                           
+                              <td>  <button className="btn btn-outline-primary " onClick={()=>deleteData(enquiry.applicant_Id)}><i className="bi bi-trash3"></i></button>
+                            </td>
                             <td>
-                                <button input type="button" onClick={()=>deleteData(enquiry.applicant_Id)}>delete</button>
+                             <Link className="btn btn-outline-primary" to={`/edit/${enquiry.applicant_Id}`} ><i class="bi bi-pencil-fill"></i></Link>
                             </td>
                            
 
@@ -105,4 +112,4 @@ return(<div style={{border:"2px"}}>
 )
 
 }
-export default Enquiry;
+export default ViewEnquiry;
